@@ -22,6 +22,8 @@ extern void show_block_buffer();
 extern void show_inode_bitmap();
 extern void show_inode(int i_inode);
 extern int find_empty_inode();
+
+extern unsigned short find_empty_block();
 /* show() 显示文件内容 */
 void show(FILE *fd, int i_inode) {
     char buf[BLOCK_SIZE];
@@ -107,6 +109,7 @@ int main() {
     }
     cout << time(NULL) << endl;
     cout << find_empty_inode() << endl;
+    cout << find_empty_block() << endl;
     // show_inode(0);
     char command[50];
     char args[50];

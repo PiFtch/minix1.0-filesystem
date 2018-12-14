@@ -44,6 +44,8 @@ struct d_inode {
 #define BLOCK_COUNT 36
 #define BLOCK_SIZE 1024
 
+
+
 #define INODE_BITMAP_COUNT 1
 #define BLOCK_BITMAP_COUNT 1
 #define D_SUPER_BLOCK_COUNT 1
@@ -55,6 +57,8 @@ struct d_inode {
 #define BLOCK_BITMAP_START 3*BLOCK_SIZE
 #define INODE_START 4*BLOCK_SIZE
 #define DATA_START 5*BLOCK_SIZE
+
+#define AVAILABLE_BLOCK_COUNT BLOCK_COUNT-1-1-INODE_BITMAP_COUNT-BLOCK_BITMAP_COUNT-INODE_BLOCK_COUNT	// 可用块
 
 #define SIZE_OF_D_SUPER_BLOCK sizeof(d_super_block)
 #define SIZE_OF_D_INODE sizeof(d_inode)

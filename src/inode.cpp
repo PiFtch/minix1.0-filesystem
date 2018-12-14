@@ -112,4 +112,7 @@ void set_inode(int i_inode, bool dir) {
     inode[i_inode].i_uid = I_UID;
     inode[i_inode].i_size = strlen(block_buffer) + 1;
     inode[i_inode].i_time = time(NULL);
+
+    /* 暂时不考虑写入超过1KB的数据 */
+    
 }

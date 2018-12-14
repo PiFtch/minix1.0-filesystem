@@ -1,5 +1,5 @@
-debug/main: build/bitmap.o build/cmd.o build/dir.o build/init.o build/main.o build/stat.o build/inode.o build/read_write.o
-	g++ build/bitmap.o build/cmd.o build/dir.o build/init.o build/main.o build/stat.o build/inode.o build/read_write.o -o debug/main
+debug/main: build/bitmap.o build/cmd.o build/dir.o build/init.o build/main.o build/stat.o build/inode.o build/read_write.o build/block.o
+	g++ build/bitmap.o build/cmd.o build/dir.o build/init.o build/main.o build/stat.o build/inode.o build/read_write.o build/block.o -o debug/main
 
 include/fs.h: include/buffer.h
 	touch include/fs.h
@@ -27,6 +27,9 @@ build/inode.o: src/inode.cpp include/fs.h include/debug.h
 
 build/read_write.o: src/read_write.cpp include/fs.h include/debug.h
 	g++ -c src/read_write.cpp -o build/read_write.o
+
+build/block.o: src/block.o include/fs.h include/debug.h
+	g++ -c src/block.cpp -o build/block.o
 
 clean:
 	rm build/* debug/main
