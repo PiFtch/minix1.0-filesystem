@@ -89,3 +89,27 @@ int find_empty_inode() {
     }
     return -1;
 }
+
+void set_inode_bitmap(int i_inode) {
+    if (i_inode < 0 || i_inode >= INODE_COUNT)
+        return ;
+    int nr_inode_bitmap_byte = (i_inode + 1) / 8;
+    unsigned char temp;
+    if (i_inode > 6) {
+        temp = i_inode - (nr_inode_bitmap_byte - 1) * 8 - 6;
+        inode_bitmap[nr_inode_bitmap_byte] += (1 << (temp - 1));
+    } else {
+        inode_bitmap[nr_inode_bitmap_byte] += ((unsigned)1 << (i_inode + 1));
+    }
+}
+
+void set_inode(int i_inode, bool dir) {
+    if (dir)
+        inode[i_inode].i_mode = I_MODE_DIR;
+    else
+        inode[i_inode].i_mode = I_MODE_NORMAL;
+
+    inode[i_inode].i_uid = I_UID;
+    inode[i_inode].i_size = strlen(block_buffer) + 1;
+    inode[i_inode].i_time = time(NULL);
+}

@@ -58,6 +58,11 @@ struct d_inode {
 
 #define SIZE_OF_D_SUPER_BLOCK sizeof(d_super_block)
 #define SIZE_OF_D_INODE sizeof(d_inode)
+
+#define I_MODE_DIR 16877
+#define I_MODE_NORMAL 33188
+#define I_UID 1000
+
 // d_inode inode[INODE_COUNT];
 
 // unsigned char inode_bitmap[INODE_BITMAP_COUNT*BLOCK_SIZE/8];
