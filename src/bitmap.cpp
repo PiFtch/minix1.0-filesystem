@@ -1,13 +1,14 @@
 #include "../include/fs.h"
 #include "../include/debug.h"
+#include "../include/buffer.h"
+/*
 extern struct d_super_block super_block;
 extern d_inode inode[32];
 extern unsigned char inode_bitmap[INODE_BITMAP_COUNT*BLOCK_SIZE/8];
 extern unsigned char block_bitmap[BLOCK_BITMAP_COUNT*BLOCK_SIZE/8];    // block bitmap缓存
 extern struct dir current_dir;
-
 extern char current_path[100];
-
+*/
 void show_inode_bitmap() {
     
     int count = (INODE_COUNT+1) % 8;

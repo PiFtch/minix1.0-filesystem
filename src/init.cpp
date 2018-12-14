@@ -1,15 +1,15 @@
 #include "../include/fs.h"
 #include "../include/debug.h"
 
+/* 全局变量 */
 d_inode inode[INODE_COUNT];     // inode缓存
 unsigned char inode_bitmap[INODE_BITMAP_COUNT*BLOCK_SIZE/8];    // inode bitmap缓存
 unsigned char block_bitmap[BLOCK_BITMAP_COUNT*BLOCK_SIZE/8];    // block bitmap缓存
 dir current_dir;    // 当前目录
 d_super_block super_block;  // 超级块缓存
-
 char current_path[100] = {0};
-
-unsigned char block_buffer[BLOCK_SIZE];
+char block_buffer[BLOCK_SIZE];
+/* 全局变量 */
 
 extern void change_dir(FILE *fd, int i_inode);
 

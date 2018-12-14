@@ -1,12 +1,13 @@
 #include "../include/fs.h"
 #include "../include/debug.h"
+#include "../include/buffer.h"
+/*
 extern struct d_super_block super_block;
 extern d_inode inode[32];
 extern unsigned char inode_bitmap[INODE_BITMAP_COUNT*BLOCK_SIZE/8];
 extern struct dir current_dir;
-
 extern char current_path[100];
-
+*/
 /* 显示当前目录 */
 void ls(FILE *fd, int i_inode) {
     char filename[32][14];      // 每个BLOCK（1024）可放32个目录项

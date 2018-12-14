@@ -1,7 +1,8 @@
 #include "../include/fs.h"
 #include "../include/debug.h"
+#include "../include/buffer.h"
 
-extern unsigned char block_buffer[BLOCK_SIZE];
+// extern unsigned char block_buffer[BLOCK_SIZE];
 
 // 读取一整块
 void read_block(FILE *fd, int i_block) {
