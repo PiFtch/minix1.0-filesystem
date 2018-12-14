@@ -27,3 +27,13 @@ void show_inode_bitmap() {
     cout << endl;
     
 }
+
+void show_block_bitmap() {
+
+    for (int i = 0; i <= (AVAILABLE_BLOCK_COUNT+1)/8; i++) {
+        cout << bitset<8>(block_bitmap[i]) << " ";
+        if ((i+1)%16 == 0)
+            cout << endl;
+    }
+    cout << endl;
+}

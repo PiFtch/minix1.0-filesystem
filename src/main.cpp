@@ -24,6 +24,8 @@ extern void show_inode(int i_inode);
 extern int find_empty_inode();
 
 extern unsigned short find_empty_block();
+
+void write(FILE *fd, char name[], char content[]);
 /* show() 显示文件内容 */
 void show(FILE *fd, int i_inode) {
     char buf[BLOCK_SIZE];
@@ -104,18 +106,22 @@ int main() {
     init(fd);
     show_current_dir();
     show_inode_bitmap();
+    /*
     for (int i = 0; i < INODE_COUNT; i++) {
         show_inode(i);
     }
     cout << time(NULL) << endl;
+    */
     cout << find_empty_inode() << endl;
     cout << find_empty_block() << endl;
     // show_inode(0);
     char command[50];
     char args[50];
+    char name[14] = "abc", content[100] = "hellohello";
+    
     
     /* loop */
-    /*
+    
     while (true) {
         cout << current_path << '$';
         // cin >> command;
@@ -135,7 +141,20 @@ int main() {
             system("hexdump ../filesystem.img");
             continue;
         }
+
+        if (strcmp(command, "write") == 0) {
+            write(fd, name, content);
+        }
+
+        if (strcmp(command, "mkfs") == 0) {
+            fclose(fd);
+            system("dd if=/dev/zero of=../filesystem.img bs=512 count=72");
+            system("mkfs.minix -1 ../filesystem.img");
+            fd = fopen(FILESYSTEM, "r+w+b");
+            init(fd);
+            continue;
+        }
     }
     
-    */
+    
 }

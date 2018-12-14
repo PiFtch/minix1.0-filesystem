@@ -111,6 +111,18 @@ void change_dir(FILE *fd, int i_inode) {
             }
         }
     }
+
+    offset = inode[i_inode].i_zone[0] * BLOCK_SIZE;
+    fseek(fd, offset, SEEK_SET);
+    fread(current_dir.block[0], 32, 32, fd);
+    /*
+    for (int i = 0; i < 32; i++) {
+        for (int j = 0; j < 32; j++) {
+            cout << bitset<8>(current_dir.block[i][j]) << " ";
+        }
+        cout << endl;
+    }
+    */
 }
 
 void show_current_dir() {
@@ -119,6 +131,7 @@ void show_current_dir() {
     int count = 0;
     for (int i = 0; i < 32; i++) {
         if (current_dir.inode[i] != 0) {
+            // cout << "flag" << endl;
             cout << setw(3) << current_dir.inode[i] << setw(15) << current_dir.filename[i] << setw(10) << inode[current_dir.inode[i]-1].i_size << endl; 
             count++;
         }

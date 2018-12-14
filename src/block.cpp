@@ -26,8 +26,22 @@ unsigned short find_empty_block() {
     return -1;
 }
 
-void set_block_bitmap() {
-
+void set_block_bitmap(unsigned short i_block) {
+    
+    if (i_block < 0 || i_block >= BLOCK_COUNT)
+        return ;
+    cout << "now setting block bitmap 6 as 1..." << endl;
+    int nr_block_bitmap_byte = (i_block - 1 - 1 - INODE_BITMAP_COUNT - BLOCK_BITMAP_COUNT - INODE_BLOCK_COUNT + 1) / 8;
+    cout << "nr_block_bitmap_byte: " << nr_block_bitmap_byte << endl;
+    unsigned char temp;
+    if (i_block - 1 - 1 - INODE_BITMAP_COUNT - BLOCK_BITMAP_COUNT - INODE_BLOCK_COUNT > 6) {
+        cout << "iblock - 5 > 6" << endl;
+        temp = (i_block - 1 - 1 - INODE_BITMAP_COUNT - BLOCK_BITMAP_COUNT - INODE_BLOCK_COUNT) - (nr_block_bitmap_byte - 1) * 8 - 6;
+        block_bitmap[nr_block_bitmap_byte] += (1 << (temp - 1));
+    } else {
+        cout << "iblock - 5 <= 6" << endl;
+        block_bitmap[nr_block_bitmap_byte] += ((unsigned)1 << (int)(i_block - 1 - 1 - INODE_BITMAP_COUNT - BLOCK_BITMAP_COUNT - INODE_BLOCK_COUNT + 1));
+    }
 }
 
 void set_block() {

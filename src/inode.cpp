@@ -103,7 +103,7 @@ void set_inode_bitmap(int i_inode) {
     }
 }
 
-void set_inode(int i_inode, bool dir) {
+void set_inode(int i_inode, bool dir, unsigned short i_block) {
     if (dir)
         inode[i_inode].i_mode = I_MODE_DIR;
     else
@@ -114,5 +114,5 @@ void set_inode(int i_inode, bool dir) {
     inode[i_inode].i_time = time(NULL);
 
     /* 暂时不考虑写入超过1KB的数据 */
-    
+
 }

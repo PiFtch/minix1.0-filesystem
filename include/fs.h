@@ -80,6 +80,7 @@ struct dir {
 	int i_inode;
 	int inode[32];
 	char filename[32][14];
+	unsigned char block[32][32];
 };
 
 #endif
