@@ -2,11 +2,16 @@
 #define FS_H
 
 #include <stdio.h>
+#include <cstdlib>
 #include <iostream>
 #include <cstring>
+#include <string>
 #include <iomanip>
 #include <bitset>
 #include <cmath>
+#include <ctime>
+
+#include "../include/buffer.h"
 using namespace std;
 #pragma pack(1)
 
@@ -32,7 +37,7 @@ struct d_inode {
 	unsigned short i_zone[9];
 };
 
-#define FILESYSTEM "../filesystem.img"
+#define FILESYSTEM "/mnt/Workspace/minix/filesystem.img"
 
 #define DISK_SIZE
 #define INODE_COUNT 32
