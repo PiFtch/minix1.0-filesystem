@@ -14,6 +14,7 @@ void sync(FILE *, unsigned short);
 extern void show_inode(int i_inode);
 extern void show_inode_bitmap();
 extern void show_block_bitmap();
+extern void change_dir(FILE *fd, int i_inode);
 
 void write(FILE *fd, char name[], char content[]) {
     if (strlen(name) >= 14) {
@@ -78,7 +79,75 @@ void write(FILE *fd, char name[], char content[]) {
     }
 
     sync(fd, i_block);
+    change_dir(fd, current_dir.i_inode);
 }
+/*
+void mkdir(FILE *fd, char name[], char content[]) {
+    if (strlen(name) >= 14) {
+        cout << "file name length cannot surpass 14 bytes!" << endl;
+        return;
+    }
+    
+    unsigned int length = strlen(content) + 1;
+    if (length > BLOCK_SIZE) {
+        cout << "file length cannot surpath 1 block(" << BLOCK_SIZE << "B) for now!" << endl;
+        return;
+    }
+
+    cout << "content length: " << length << endl;
+
+    cout << "before: inode bitmap: ";
+    show_inode_bitmap();
+    cout << "before: block bitmap: ";
+    show_block_bitmap();
+    // strcpy(block_buffer, content);
+    // cout << "copy content to block_buffer: " << block_buffer << endl;
+    // int i_block = find_empty_block();
+    // cout << "find empty block: " << i_block << endl;
+    int i_inode = find_empty_inode();
+    cout << "find empty inode: " << i_inode << endl;
+    
+    // set_inode(i_inode, false, i_block);
+    
+    show_inode(i_inode);
+    set_inode_bitmap(i_inode);
+    cout << "after: inode bitmap: ";
+    show_inode_bitmap();
+    set_block_bitmap(i_block);
+    cout << "after: block bitmap: ";
+    show_block_bitmap();
+    
+    // cout << "current direct i_inode: " << current_dir.i_inode << endl;
+    show_inode(current_dir.i_inode);
+    inode[current_dir.i_inode].i_time = inode[i_inode].i_time;
+    inode[current_dir.i_inode].i_size += 32;
+    show_inode(current_dir.i_inode);
+    // inode[current_dir.i_inode]
+    cout << bitset<8>(current_dir.block[0][0]) << endl;
+    cout << bitset<8>(current_dir.block[0][1]) << endl;
+    for (int i = 0; i < 32; i++) {
+        if (current_dir.block[i][0] == 0 && current_dir.block[i][1] == 0) {
+            cout << "flag" << endl;
+            
+            unsigned char low, high;
+            low = (unsigned short)(i_inode + 1) & 0x00ff;
+            cout << "low: " << low << endl;
+            high = (unsigned short)(i_inode + 1) & 0xff00;
+            cout << "high: " << high << endl;
+            current_dir.block[i][0] = low;
+            cout << bitset<8>(current_dir.block[i][0]) << endl;
+            current_dir.block[i][1] = high;
+            cout << bitset<8>(current_dir.block[i][1]) << endl;
+            strcpy(((char *)current_dir.block[i] + 2), name);
+            cout << "name: " << (char *)current_dir.block[i] + 2 << endl;
+            break;
+        }
+    }
+
+    sync(fd, i_block);
+    change_dir(fd, current_dir.i_inode);
+}
+*/
 
 void sync(FILE *fd, unsigned short nr_block) {
     // 写回inode bitmap

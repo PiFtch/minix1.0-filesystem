@@ -114,5 +114,5 @@ void set_inode(int i_inode, bool dir, unsigned short i_block) {
     inode[i_inode].i_time = time(NULL);
 
     /* 暂时不考虑写入超过1KB的数据 */
-
+    inode[i_inode].i_zone[0] = i_block;
 }

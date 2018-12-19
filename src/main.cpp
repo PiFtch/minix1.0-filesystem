@@ -72,6 +72,8 @@ extern void show_current_dir();
 
 
 int main() {
+    system("dd if=/dev/zero of=../filesystem.img bs=512 count=72");
+    system("mkfs.minix -1 ../filesystem.img");
     unsigned char buf[1024];
     FILE *fd = fopen(FILESYSTEM, "r+w+b");
 
@@ -126,6 +128,16 @@ int main() {
         cout << current_path << '$';
         // cin >> command;
         scanf("%s", command);
+        if (strcmp(command, "exit") == 0) {
+            return 0;
+        }
+
+        if (strcmp(command, "cat") == 0) {
+            scanf("%s", args);
+            show(fd, namei(args)-1);
+            continue;
+        }
+
         if (strcmp(command, "ls") == 0) {
             show_current_dir();
             continue;
