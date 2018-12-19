@@ -72,8 +72,11 @@ extern void show_current_dir();
 
 
 int main() {
-    system("dd if=/dev/zero of=../filesystem.img bs=512 count=72");
-    system("mkfs.minix -1 ../filesystem.img");
+    cout << "create a new disk image with minix1.0 filesystem?(y/n) ";
+    if (getchar() == 'y') {
+        system("dd if=/dev/zero of=../filesystem.img bs=512 count=72");
+        system("mkfs.minix -1 ../filesystem.img");
+    }
     unsigned char buf[1024];
     FILE *fd = fopen(FILESYSTEM, "r+w+b");
 
