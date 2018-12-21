@@ -1,14 +1,6 @@
 #include "../include/fs.h"
 #include "../include/debug.h"
 #include "../include/buffer.h"
-/*
-extern struct d_super_block super_block;
-extern d_inode inode[32];
-extern unsigned char inode_bitmap[INODE_BITMAP_COUNT*BLOCK_SIZE/8];
-extern struct dir current_dir;
-
-extern char current_path[100];
-*/
 
 extern void read_super_block(FILE *);
 extern void read_inode_bitmap(FILE *);
@@ -80,56 +72,20 @@ int main() {
     unsigned char buf[1024];
     FILE *fd = fopen(FILESYSTEM, "r+w+b");
 
-    /*
-    read_super_block(fd);
-    read_inode_bitmap(fd);
-    read_inodes(fd);
-    show(fd, 3);
-    show(fd, 4);
-    cout << "ls" << endl;
-    ls(fd, 0);
-    change_dir(fd, 0);
-    show_current_dir();
-    // char filename[14] = "test3";
-    // cout << namei(filename) << endl;
-    char filename[14] = "test_dir";
-    cout << "cd test_dir" << endl;
-    change_dir(fd, namei(filename)-1);
-    show_current_dir();
-    show(fd, namei(filename)-1);
-    cout << "cd test_dir2" << endl;
-    char filename3[14] = "test_dir2";
-    change_dir(fd, namei(filename3)-1);
-    show_current_dir();
-    char filename2[14] = "..";
-    change_dir(fd,namei(filename2)-1);
-    show_current_dir();
-    change_dir(fd, namei(filename2)-1);
-    show_current_dir();
-    */
     system("cat /mnt/Workspace/minix/mkfs.txt");
     init(fd);
     show_current_dir();
     show_inode_bitmap();
-    /*
-    for (int i = 0; i < INODE_COUNT; i++) {
-        show_inode(i);
-    }
-    cout << time(NULL) << endl;
-    */
     cout << find_empty_inode() << endl;
     cout << find_empty_block() << endl;
-    // show_inode(0);
     char command[50];
     char args[50];
     char name[14] = "abc", content[100] = "hellohello";
     
     
     /* loop */
-    
     while (true) {
         cout << current_path << '$';
-        // cin >> command;
         scanf("%s", command);
         if (strcmp(command, "exit") == 0) {
             return 0;

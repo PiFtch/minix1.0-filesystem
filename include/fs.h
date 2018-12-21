@@ -16,25 +16,24 @@ using namespace std;
 #pragma pack(1)
 
 struct d_super_block {
-	unsigned short s_ninodes;
-	unsigned short s_nzones;
-	unsigned short s_imap_blocks;
-	unsigned short s_zmap_blocks;
-	unsigned short s_firstdatazone;
-	unsigned short s_log_zone_size;
-	unsigned int s_max_size;
-	unsigned short s_magic;
+	unsigned short s_ninodes;	// inode数
+	unsigned short s_nzones;	// block数
+	unsigned short s_imap_blocks;	// inode位图块数
+	unsigned short s_zmap_blocks;	// block位图块数
+	unsigned short s_firstdatazone;	// 首个数据块
+	unsigned short s_log_zone_size;	// 日志
+	unsigned int s_max_size;	// 允许的最大大小
+	unsigned short s_magic;		// 魔数
 };
-// d_super_block super_block;
 
 struct d_inode {
-	unsigned short i_mode;
-	unsigned short i_uid;
-	unsigned int i_size;
-	unsigned int i_time;
-	unsigned char i_gid;
-	unsigned char i_nlinks;
-	unsigned short i_zone[9];
+	unsigned short i_mode;	// 模式
+	unsigned short i_uid;	// 用户ID
+	unsigned int i_size;	// 大小
+	unsigned int i_time;	// 修改时间
+	unsigned char i_gid;	// 组ID
+	unsigned char i_nlinks;	// 链接数
+	unsigned short i_zone[9];	// 文件所用块，取消了三级索引，全为直接索引
 };
 
 #define FILESYSTEM "/mnt/Workspace/minix/filesystem.img"
@@ -67,15 +66,7 @@ struct d_inode {
 #define I_MODE_NORMAL 33188
 #define I_UID 1000
 
-// d_inode inode[INODE_COUNT];
-
-// unsigned char inode_bitmap[INODE_BITMAP_COUNT*BLOCK_SIZE/8];
-
-// struct {
-// 	int i_inode;
-// 	int inode[32];
-// 	char filename[32][14];
-// }current_dir;
+/* 目录结构 */
 struct dir {
 	int i_inode;
 	int inode[32];
