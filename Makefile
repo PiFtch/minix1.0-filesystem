@@ -28,7 +28,7 @@ build/inode.o: src/inode.cpp include/fs.h include/debug.h
 build/read_write.o: src/read_write.cpp include/fs.h include/debug.h
 	g++ -c src/read_write.cpp -o build/read_write.o
 
-build/block.o: src/block.o include/fs.h include/debug.h
+build/block.o: src/block.cpp include/fs.h include/debug.h
 	g++ -c src/block.cpp -o build/block.o
 
 clean:

@@ -66,6 +66,8 @@ struct d_inode {
 #define I_MODE_NORMAL 33188
 #define I_UID 1000
 
+#define DIR_LENGTH 32
+
 /* 目录结构 */
 struct dir {
 	int i_inode;
@@ -73,5 +75,7 @@ struct dir {
 	char filename[32][14];
 	unsigned char block[32][32];
 };
+
+
 
 #endif

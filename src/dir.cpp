@@ -1,13 +1,8 @@
 #include "../include/fs.h"
 #include "../include/debug.h"
 #include "../include/buffer.h"
-/*
-extern struct d_super_block super_block;
-extern d_inode inode[32];
-extern unsigned char inode_bitmap[INODE_BITMAP_COUNT*BLOCK_SIZE/8];
-extern struct dir current_dir;
-extern char current_path[100];
-*/
+
+
 /* 显示当前目录 */
 void ls(FILE *fd, int i_inode) {
     char filename[32][14];      // 每个BLOCK（1024）可放32个目录项
@@ -60,16 +55,6 @@ void change_dir(FILE *fd, int i_inode) {
                         strcpy(tmp_name2, tmp_name);
                         tmp_name = strtok(NULL, "/");
                     }
-                    // cout << "tmp_name2 " << tmp_name2 << endl;
-                    // cout << "current path " <<current_path << endl;
-                    /*
-                    int len = strlen(current_path) - strlen(tmp_name2) - 1;
-                    cout << len << endl;
-                    string str(current_path);
-                    cout << "current_path " << current_path << endl;
-                    // string str2 = str.substr(0, len);
-                    strcpy(current_path, (str.substr(0, len)).c_str());
-                    */
                     strcat(current_path, "/");
                     break;
                 }
@@ -115,14 +100,6 @@ void change_dir(FILE *fd, int i_inode) {
     offset = inode[i_inode].i_zone[0] * BLOCK_SIZE;
     fseek(fd, offset, SEEK_SET);
     fread(current_dir.block[0], 32, 32, fd);
-    /*
-    for (int i = 0; i < 32; i++) {
-        for (int j = 0; j < 32; j++) {
-            cout << bitset<8>(current_dir.block[i][j]) << " ";
-        }
-        cout << endl;
-    }
-    */
 }
 
 void show_current_dir() {

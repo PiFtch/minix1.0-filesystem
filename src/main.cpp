@@ -17,7 +17,8 @@ extern int find_empty_inode();
 
 extern unsigned short find_empty_block();
 
-void write(FILE *fd, char name[], char content[]);
+extern void write(FILE *fd, char name[], char content[]);
+extern void mkdir(FILE *fd, char name[]);
 /* show() 显示文件内容 */
 void show(FILE *fd, int i_inode) {
     char buf[BLOCK_SIZE];
@@ -115,6 +116,11 @@ int main() {
 
         if (strcmp(command, "write") == 0) {
             write(fd, name, content);
+        }
+
+        if (strcmp(command, "mkdir") == 0) {
+            scanf("%s", args);
+            mkdir(fd, args);
         }
 
         if (strcmp(command, "mkfs") == 0) {

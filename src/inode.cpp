@@ -1,7 +1,17 @@
+/**
+ * inode.cpp
+ * 包含管理inode相关函数
+ * show_inode
+ * find_empty_inode
+ * set_inode_bitmap -- 应该移至bitmap
+ * set_inode
+ * */
+
 #include "../include/fs.h"
 #include "../include/debug.h"
 #include "../include/buffer.h"
 
+/* 显示inode缓冲区中某一inode的信息 */
 void show_inode(int i_inode) {
     if (i_inode == -1) {
         return;
@@ -19,43 +29,6 @@ void show_inode(int i_inode) {
         cout << inode[i_inode].i_zone[z] << ' ';
     }
     cout << endl;
-
-    /*
-    int count = (INODE_COUNT+1) % 8;
-    if (count != 0) {
-        count = (INODE_COUNT+1)/8 + 1;
-    } else {
-        count = (INODE_COUNT+1)/8;
-    }
-
-    int c = -1;
-    for (int i = 0; i < count; i++) {
-        for (unsigned int j = 1; j <= (1<<7); j <<= 1) {
-            unsigned char res = inode_bitmap[i] & j;
-            if (res) {
-                
-                int index = log((int)res)/log(2) + c;
-                if (index != -1 && index < INODE_COUNT) {
-                    cout << "inode: " << index+1 << endl;
-                    cout << "i_mode: " << inode[index].i_mode << endl;
-                    cout << "i_uid: " << inode[index].i_uid << endl;
-                    cout << "i_size: " << inode[index].i_size << endl;
-                    cout << "i_time: " << inode[index].i_time << endl;
-                    cout << "i_gid: " << inode[index].i_gid << endl;
-                    cout << "i_nlinks: " << inode[index].i_nlinks << endl;
-                    cout << "i_zone: ";
-                    for (int z = 0; z < 9; z++) {
-                        cout << inode[index].i_zone[z] << ' ';
-                    }
-                    cout << endl;
-                }
-            }
-            // getchar();
-            // cout << (unsigned int)j << endl;
-        }
-        c += 8;
-    }
-    */
 }
 
 /* 找到内存中第一个空闲的inode，返回i_inode */
@@ -84,6 +57,7 @@ int find_empty_inode() {
     return -1;
 }
 
+/* 将某一个inode对应的位图位置1 */
 void set_inode_bitmap(int i_inode) {
     if (i_inode < 0 || i_inode >= INODE_COUNT)
         return ;
@@ -97,6 +71,11 @@ void set_inode_bitmap(int i_inode) {
     }
 }
 
+/* 设置某一inode的内容 */
+/**
+ * dir -- 是否是目录
+ * i_block -- 占用的磁盘块
+ * */
 void set_inode(int i_inode, bool dir, unsigned short i_block) {
     if (dir)
         inode[i_inode].i_mode = I_MODE_DIR;
@@ -104,7 +83,12 @@ void set_inode(int i_inode, bool dir, unsigned short i_block) {
         inode[i_inode].i_mode = I_MODE_NORMAL;
 
     inode[i_inode].i_uid = I_UID;
-    inode[i_inode].i_size = strlen(block_buffer) + 1;
+    if (dir) {
+        inode[i_inode].i_size = DIR_LENGTH * 2;
+    } else {
+        inode[i_inode].i_size = strlen(block_buffer) + 1;
+    }
+
     inode[i_inode].i_time = time(NULL);
 
     /* 暂时不考虑写入超过1KB的数据 */

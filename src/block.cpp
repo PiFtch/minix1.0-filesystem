@@ -1,3 +1,10 @@
+/**
+ * block.cpp
+ * 管理数据块相关函数
+ * find_empty_block
+ * set_block_bitmap -- 应移至bitmap.cpp
+ * */
+
 #include "../include/fs.h"
 #include "../include/debug.h"
 #include "../include/buffer.h"
